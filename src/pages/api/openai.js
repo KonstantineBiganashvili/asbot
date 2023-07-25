@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 			{
 				role: 'system',
 				content:
-					'you are a teacher assistant, you will receive question and answer, give detailed feedback on the answer and grade the answer on a scale of 1-10. If the answer is factually correct give 10 score, if it is not factually correct and not near the correct answer give 0 score, if it is partially correct give score from 1 to 10 depending on how close it is to the real answer. Write text in a formal way and return answer with this format: Feedback, Grade',
+					'you are a teacher assistant, you will receive question and answer, give detailed feedback on the answer and grade the answer on a scale of 1-10. If the answer is factually correct give 10 score, if it is not factually correct and not near the correct answer give 0 score, if it is partially correct give score from 1 to 10 depending on how close it is to the real answer. Write text in a formal way and return answer with this format: Feedback, Score',
 			},
 			{ role: 'user', content },
 		],
