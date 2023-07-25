@@ -6,6 +6,11 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+const BASE_URL =
+	process.env.NODE_ENV === 'production'
+		? 'https://asbot-iota.vercel.app'
+		: 'http://localhost:3000';
+
 export default async function handler(req, res) {
 	let content;
 	let text;
@@ -15,13 +20,10 @@ export default async function handler(req, res) {
 	} = req.body;
 
 	if (language === 'ka') {
-		const translation = await axios.post(
-			'http://localhost:3000/api/translate',
-			{
-				text: `${question} \n ${answer}`,
-				target: 'en',
-			},
-		);
+		const translation = await axios.post(`${BASE_URL}/api/translate`, {
+			text: `${question} \n ${answer}`,
+			target: 'en',
+		});
 
 		content = translation.data.translatedText;
 	} else {
@@ -43,18 +45,14 @@ export default async function handler(req, res) {
 	const feedback = completion.data.choices[0].message.content;
 
 	if (language === 'ka') {
-		const translation = await axios.post(
-			'http://localhost:3000/api/translate',
-			{
-				text: `${feedback}`,
-				target: 'ka',
-			},
-		);
+		const translation = await axios.post(`${BASE_URL}/api/translate`, {
+			text: `${feedback}`,
+			target: 'ka',
+		});
 
 		text = translation.data.translatedText;
 	} else {
 		text = feedback;
-		// .replace(/([.!?;])/g, '<br />')
 	}
 
 	res.status(200).json({ text });
