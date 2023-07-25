@@ -1,6 +1,13 @@
 import React from 'react';
 
-const Input = ({ label, placeholder, value, onChange, required = false }) => {
+const Input = ({
+	label,
+	placeholder,
+	value,
+	onChange,
+	required = false,
+	error = false,
+}) => {
 	return (
 		<>
 			<label
@@ -12,7 +19,9 @@ const Input = ({ label, placeholder, value, onChange, required = false }) => {
 			<input
 				name='question'
 				placeholder={placeholder}
-				className='text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-500 border-gray-600 placeholder-gray-200 text-white focus:ring-blue-500 focus:border-blue-500'
+				className={`text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-500 border-gray-600 placeholder-gray-200 text-white focus:ring-blue-500 focus:border-blue-500 ${
+					error ? 'bordered border-2 border-red-500' : ''
+				}`}
 				value={value}
 				onChange={onChange}
 				required={required}

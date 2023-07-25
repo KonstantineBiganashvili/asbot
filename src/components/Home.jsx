@@ -10,12 +10,22 @@ import subjects from '@/constants/subjects';
 const HomePage = () => {
 	const [question, setQuestion] = useState('');
 	const [answer, setAnswer] = useState('');
+	const [questionError, setQuestionError] = useState(false);
+	const [answerError, setAnswerError] = useState(false);
 	// const [subject, setSubject] = useState(subjects[0].value);
 	const [language, setLanguage] = useState(languages[0].value);
 	const [loading, setLoading] = useState(false);
 	const [response, setResponse] = useState([]);
 
 	const askGPT = async () => {
+		if (!question.length) {
+			setQuestionError(true);
+		}
+
+		if (!answer.length) {
+			setAnswerError(true);
+		}
+
 		if (!question.length || !answer.length) return;
 
 		try {
@@ -37,10 +47,6 @@ const HomePage = () => {
 			setLoading(false);
 		}
 	};
-
-	useEffect(() => {
-		console.log(response);
-	}, [response]);
 
 	return (
 		<div className='w-full h-full flex-1 flex flex-col items-center justify-between gap-12'>
@@ -64,8 +70,12 @@ const HomePage = () => {
 						label='Question:'
 						placeholder='Enter your question here'
 						value={question}
-						onChange={({ target }) => setQuestion(target.value)}
+						onChange={({ target }) => {
+							setQuestionError(false);
+							setQuestion(target.value);
+						}}
 						required={true}
+						error={questionError}
 					/>
 				</div>
 				<div className='flex flex-col items-start justify-between gap-2'>
@@ -73,8 +83,12 @@ const HomePage = () => {
 						label='Answer:'
 						placeholder='Enter your answer here'
 						value={answer}
-						onChange={({ target }) => setAnswer(target.value)}
+						onChange={({ target }) => {
+							setAnswerError(false);
+							setAnswer(target.value);
+						}}
 						required={true}
+						error={answerError}
 					/>
 				</div>
 				<div className='flex items-center justify-end gap-4'>
