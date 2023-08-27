@@ -13,7 +13,7 @@ const HomePage = () => {
 	const [questionError, setQuestionError] = useState(false);
 	const [answerError, setAnswerError] = useState(false);
 	// const [subject, setSubject] = useState(subjects[0].value);
-	const [language, setLanguage] = useState(languages[0].code);
+	const [language, setLanguage] = useState(languages[26].code);
 	const [loading, setLoading] = useState(false);
 	const [response, setResponse] = useState([]);
 
