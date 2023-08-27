@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 		data: { question, answer, language },
 	} = req.body;
 
-	if (language === 'ka') {
+	if (language !== 'en') {
 		const translatedQuestion = await axios.post(`${BASE_URL}/api/translate`, {
 			text: question,
 			target: 'en',
@@ -49,10 +49,10 @@ export default async function handler(req, res) {
 
 	const feedback = completion.data.choices[0].message.content;
 
-	if (language === 'ka') {
+	if (language !== 'en') {
 		const translation = await axios.post(`${BASE_URL}/api/translate`, {
 			text: `${feedback}`,
-			target: 'ka',
+			target: language,
 		});
 
 		text = translation.data.translatedText;

@@ -13,7 +13,7 @@ const HomePage = () => {
 	const [questionError, setQuestionError] = useState(false);
 	const [answerError, setAnswerError] = useState(false);
 	// const [subject, setSubject] = useState(subjects[0].value);
-	const [language, setLanguage] = useState(languages[0].value);
+	const [language, setLanguage] = useState(languages[0].code);
 	const [loading, setLoading] = useState(false);
 	const [response, setResponse] = useState([]);
 
@@ -27,6 +27,15 @@ const HomePage = () => {
 		}
 
 		if (!question.length || !answer.length) return;
+
+		const result = await axios.post('/api/openai', {
+			data: {
+				question,
+				answer,
+				// subject,
+				language,
+			},
+		});
 
 		try {
 			setLoading(true);
@@ -58,11 +67,7 @@ const HomePage = () => {
 					: !loading
 					? 'Feedback will appear here!'
 					: null}
-				{loading
-					? language === 'ka'
-						? 'გთხოვთ დაიცადოთ...'
-						: 'Please wait...'
-					: null}
+				{loading ? 'Please wait...' : null}
 			</div>
 			<div className='w-full flex flex-col gap-4'>
 				<div className='w-full flex flex-col items-start justify-between gap-2'>
