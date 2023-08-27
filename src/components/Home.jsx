@@ -28,15 +28,6 @@ const HomePage = () => {
 
 		if (!question.length || !answer.length) return;
 
-		const result = await axios.post('/api/openai', {
-			data: {
-				question,
-				answer,
-				// subject,
-				language,
-			},
-		});
-
 		try {
 			setLoading(true);
 
